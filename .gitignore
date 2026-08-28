@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Variables de entorno (NUNCA subir las claves al repositorio).
+# Ojo: `*.local` de arriba ya cubre .env.local, pero lo dejamos explícito
+# para que se vea la intención y por si algún día se usa otro nombre.
+.env
+.env.*
+!.env.example
