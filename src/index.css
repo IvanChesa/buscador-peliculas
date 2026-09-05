@@ -1,36 +1,119 @@
 /* ---------------------------------------------------------------------------
-   Estilos base y variables del tema oscuro.
-   Aquí solo va lo GLOBAL (reset, colores, tipografía).
-   Lo que es de la aplicación en sí está en App.css.
+   Estilos base y tokens del tema.
+
+   Los valores salen del sistema de diseño de ivanchesa.es (tinta azul profunda
+   + un único acento azul eléctrico). Aquí solo va lo GLOBAL: fuentes, tokens,
+   reset y utilidades. Lo que es de la aplicación está en App.css.
+
+   Un "token" es una custom property con nombre semántico: los componentes
+   nunca escriben #38BDF8, escriben var(--accent-400). Si mañana cambia la
+   marca, se toca este archivo y nada más.
    --------------------------------------------------------------------------- */
 
+/* @import tiene que ir el primero de todo el archivo: es regla de CSS. */
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
 :root {
-  /* Custom properties de CSS: definimos la paleta una vez y la reutilizamos.
-     Si mañana quieres cambiar el color de acento, tocas UNA línea. */
-  --bg: #10111a;
-  --bg-soft: #1a1c28;
-  --bg-card: #1e2130;
-  --border: #2f3348;
-  --text: #e6e8f0;
-  --text-muted: #9aa0b4;
-  --accent: #f5c518; /* el amarillo de IMDb */
-  --danger: #ff6b6b;
-  --radius: 10px;
+  /* ---- Base: escala de tinta azul ---- */
+  --ink-950: #060a14;
+  --ink-900: #0a0f1e;
+  --ink-850: #0d1526;
+  --ink-800: #121b30;
+  --ink-700: #1b2740;
 
-  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
+  /* ---- Texto ---- */
+  --fg-1: #e9eef7;
+  --fg-2: #a2afc9;
+  --fg-3: #6b7893;
 
-  /* Le dice al navegador que la página es oscura, para que pinte del color
-     correcto las barras de scroll y los controles nativos. */
-  color-scheme: dark;
-  color: var(--text);
-  background-color: var(--bg);
+  /* ---- Acento: azul eléctrico. Uno solo, y se nota. ---- */
+  --accent-300: #7ccbff;
+  --accent-400: #38bdf8;
+  --accent-500: #0ea5e9;
+  --accent-ink: #06202e;
 
-  -webkit-font-smoothing: antialiased;
+  /* ---- Semánticos: SOLO para estado, nunca decorativos ---- */
+  --ok: #3fb950;
+  --warn: #f0c420;
+  --error: #f25555;
+
+  /* ---- Líneas. En un tema oscuro mandan los bordes, no las sombras. ---- */
+  --line-1: rgba(162, 175, 201, 0.13);
+  --line-2: rgba(162, 175, 201, 0.26);
+  --line-accent: rgba(56, 189, 248, 0.35);
+
+  /* ---- Alias semánticos: el resto del CSS usa estos, no los de arriba ---- */
+  --surface-page: var(--ink-900);
+  --surface-card: var(--ink-850);
+  --surface-raised: var(--ink-800);
+  --surface-inset: var(--ink-950);
+  --text-heading: var(--fg-1);
+  --text-body: var(--fg-2);
+  --text-muted: var(--fg-3);
+  --text-on-accent: var(--accent-ink);
+  --focus-ring: 0 0 0 2px var(--ink-900), 0 0 0 4px var(--accent-500);
+
+  /* ---- Tipografía ---- */
+  --font-display: 'Bricolage Grotesque', system-ui, sans-serif;
+  --font-body: 'Archivo', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-base: 16px;
+  --text-md: 18px;
+  --text-lg: 22px;
+  --text-xl: 28px;
+  --text-2xl: 38px;
+  --text-3xl: 52px;
+
+  --w-medium: 500;
+  --w-semibold: 600;
+  --w-bold: 700;
+  --w-black: 800;
+
+  --lh-tight: 1.05;
+  --lh-heading: 1.15;
+  --lh-body: 1.6;
+
+  /* El tracking negativo del display es lo que le da el carácter a la marca. */
+  --track-display: -0.025em;
+  --track-mono: 0.02em;
+  --track-label: 0.08em;
+
+  /* ---- Espaciado y radios ---- */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+  --sp-20: 80px;
+  --sp-24: 96px;
+
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 14px;
+  --r-full: 999px;
+
+  --container: 1160px;
+  --container-pad: 24px;
+
+  /* ---- Efectos ---- */
+  --shadow-pop: 0 16px 48px rgba(4, 7, 14, 0.6);
+  --glow-accent: 0 0 0 1px var(--line-accent), 0 8px 32px rgba(56, 189, 248, 0.12);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --t-fast: 140ms var(--ease-out);
+  --t-med: 240ms var(--ease-out);
+
+  color-scheme: dark; /* barras de scroll y controles nativos en oscuro */
 }
 
-/* Reset mínimo: border-box hace que padding y borde NO sumen al ancho, que es
-   lo que casi siempre queremos. Es la primera línea de casi cualquier CSS. */
+/* Reset mínimo: border-box hace que padding y borde NO sumen al ancho. */
 *,
 *::before,
 *::after {
@@ -40,16 +123,49 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background-color: var(--bg);
+  background-color: var(--surface-page);
+  color: var(--text-body);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, p, ul {
+h1,
+h2,
+h3,
+p,
+ul,
+ol,
+dl,
+dd,
+figure {
   margin: 0;
 }
 
-ul {
+h1,
+h2,
+h3 {
+  color: var(--text-heading);
+  font-family: var(--font-display);
+  letter-spacing: var(--track-display);
+  line-height: var(--lh-heading);
+}
+
+ul,
+ol {
   padding: 0;
   list-style: none;
+}
+
+a {
+  color: var(--accent-400);
+  text-decoration: none;
+  transition: color var(--t-fast);
+}
+
+a:hover {
+  color: var(--accent-300);
 }
 
 img {
@@ -57,9 +173,25 @@ img {
   display: block;
 }
 
+/* Un solo sitio para el aro de foco de toda la app. :focus-visible en vez de
+   :focus para que solo salga al navegar con teclado, no al hacer clic. */
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+/* Respeta a quien haya pedido menos movimiento en su sistema operativo. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 /* Oculta el texto visualmente pero lo mantiene accesible para los lectores de
-   pantalla. Es el truco estándar; `display: none` NO valdría porque también lo
-   escondería de la tecnología asistiva. */
+   pantalla. `display: none` NO valdría: también lo escondería de ellos. */
 .visually-hidden {
   position: absolute;
   width: 1px;

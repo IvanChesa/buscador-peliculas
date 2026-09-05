@@ -57,5 +57,17 @@ export function useSearch () {
     return message === null
   }
 
-  return { search, updateSearch, validate, error }
+  /**
+   * Deja el input como recién abierta la app: sin texto y sin mensaje.
+   * Lo usa el botón "Limpiar" de los resultados. Ojo con `hasTyped`: si no lo
+   * bajáramos, vaciar el campo dispararía el error de "búsqueda vacía" y el
+   * usuario volvería a la portada con un aviso en rojo sin haber hecho nada.
+   */
+  const reset = () => {
+    hasTyped.current = false
+    setSearch('')
+    setError(null)
+  }
+
+  return { search, updateSearch, validate, reset, error }
 }
