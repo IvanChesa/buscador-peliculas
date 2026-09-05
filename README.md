@@ -40,23 +40,21 @@ Proyecto realizado como práctica de React (DAW).
 
 ## 📸 Capturas
 
-<!-- Haz las capturas, guárdalas en una carpeta /screenshots y descomenta: -->
+![Estado inicial](./screenshots/inicial.jpg)
 
-<!-- ![Estado inicial](./screenshots/inicial.png) -->
+_Estado inicial: la portada, con el buscador y los destacados._
 
-_Estado inicial_
+![Resultados de búsqueda](./screenshots/resultados.jpg)
 
-<!-- ![Resultados de búsqueda](./screenshots/resultados.png) -->
+_Resultados de «star wars»: el contador de resultados y el filtro por tipo._
 
-_Resultados de una búsqueda_
+![Validación del formulario](./screenshots/validacion.jpg)
 
-<!-- ![Validación del formulario](./screenshots/validacion.png) -->
+_El mensaje de validación aparece bajo el input, sin bloquear el formulario._
 
-_Mensaje de validación_
+<img src="./screenshots/movil.png" alt="Vista en móvil" width="360">
 
-<!-- ![Vista móvil](./screenshots/movil.png) -->
-
-_Vista en móvil_
+_Vista en móvil: la cuadrícula baja a dos columnas._
 
 ## 🛠️ Stack
 
