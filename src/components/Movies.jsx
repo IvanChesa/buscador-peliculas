@@ -5,18 +5,21 @@ import { typeLabel } from '../hooks/useMovies'
  * Tarjeta de una película. Recibe YA nuestro objeto normalizado
  * { id, title, year, type, poster }, nunca el objeto crudo de OMDb.
  *
- * El pie tiene dos huecos: `meta` a la izquierda (por defecto "año · tipo") y
- * `extra` a la derecha, que en los destacados lleva la nota de IMDb.
- *
- * `titleHidden` es para los destacados, donde el título ya se lee grande dentro
- * del propio bloque del póster: repetirlo justo debajo sobraba.
+ * `label` es el título corto para el plan B del póster (los destacados lo
+ * usan) y `badge` una chapa opcional sobre la portada, que ahí es la nota de
+ * IMDb. Sin ellos la tarjeta es la de los resultados de búsqueda.
  */
-export function MovieCard ({ movie, onSelect, label, meta, extra, titleHidden }) {
+export function MovieCard ({ movie, onSelect, label, badge }) {
   const { title, year, type, poster } = movie
 
   return (
     <article className='movie'>
       <Poster src={poster} title={title} label={label} year={year} />
+
+      {/* La chapa va ENCIMA del póster y no en el pie: abajo hay sitio justo
+          para "año · tipo", y al añadirle la nota el texto se partía en dos
+          líneas en cuanto la tarjeta se estrechaba. */}
+      {badge && <span className='movie__badge'>{badge}</span>}
 
       {/*
         PATRÓN "ENLACE ESTIRADO": el botón envuelve solo el título, pero en el
@@ -29,35 +32,21 @@ export function MovieCard ({ movie, onSelect, label, meta, extra, titleHidden })
         del botón es el título de la película, que es justo lo que debe leer un
         lector de pantalla.
       */}
-      {titleHidden && (
-        // Sin texto visible, el botón necesita un aria-label o sería un botón
-        // mudo para quien use lector de pantalla.
-        <button
-          className='movie__button movie__button--overlay'
-          type='button'
-          aria-label={`Ver ficha de ${title}`}
-          onClick={() => onSelect(movie)}
-        />
-      )}
-
       <div className='movie__info'>
-        {!titleHidden && (
-          <h3 className='movie__title'>
-            <button
-              className='movie__button'
-              type='button'
-              onClick={() => onSelect(movie)}
-            >
-              {title}
-            </button>
-          </h3>
-        )}
+        <h3 className='movie__title'>
+          <button
+            className='movie__button'
+            type='button'
+            onClick={() => onSelect(movie)}
+          >
+            {title}
+          </button>
+        </h3>
 
         <p className='movie__meta'>
           {/* filter(Boolean) por si OMDb no manda el tipo: así no queda un
               separador suelto colgando detrás del año. */}
-          <span>{meta ?? [year, typeLabel(type)].filter(Boolean).join(' · ')}</span>
-          {extra}
+          {[year, typeLabel(type)].filter(Boolean).join(' · ')}
         </p>
       </div>
     </article>

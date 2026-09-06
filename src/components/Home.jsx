@@ -1,6 +1,5 @@
 import { SearchForm } from './SearchForm'
 import { MovieCard } from './Movies'
-import { typeLabel } from '../hooks/useMovies'
 import { FEATURED_MOVIES, STACK, SUGGESTIONS } from '../data/featured'
 
 /** La etiqueta con la rayita que abre cada sección. Sale del sistema de diseño. */
@@ -116,12 +115,10 @@ export function Home ({
               <MovieCard
                 movie={movie}
                 onSelect={onOpenMovie}
-                // El título corto es el que cabe en el bloque del póster, y
-                // ahí se queda: en los destacados manda la portada, no el pie.
+                // `short` solo entra en juego si la URL del póster caducase:
+                // es el título que cabe en el bloque tipográfico del plan B.
                 label={movie.short}
-                titleHidden
-                meta={typeLabel(movie.type)}
-                extra={<span className='movie__rating'>★ {movie.rating}</span>}
+                badge={`★ ${movie.rating}`}
               />
             </li>
           ))}

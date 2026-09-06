@@ -651,25 +651,31 @@ html {
   inset: 0;
 }
 
-/* Variante sin texto (destacados): el botón ES la capa que cubre la tarjeta,
-   no hace falta el ::after. */
-.movie__button--overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-}
-
 .movie__meta {
-  display: flex;
-  justify-content: space-between;
-  gap: var(--sp-2);
   font-family: var(--font-mono);
   font-size: 11px;
   color: var(--fg-3);
 }
 
-.movie__rating {
-  color: var(--accent-400);
+/* La nota de IMDb de los destacados, sobre la esquina del póster.
+   pointer-events:none para que no abra un agujero en el enlace estirado que
+   cubre la tarjeta: la chapa se ve, pero los clics le pasan por debajo. */
+.movie__badge {
+  position: absolute;
+  top: var(--sp-2);
+  right: var(--sp-2);
+  /* Por encima del póster; el enlace estirado se queda por debajo. */
+  z-index: 1;
+  padding: 3px 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--accent-300);
+  /* color-mix en vez de un rgba a pelo: el color sigue saliendo del token. */
+  background-color: color-mix(in srgb, var(--ink-950) 80%, transparent);
+  border: 1px solid var(--line-accent);
+  border-radius: var(--r-full);
+  pointer-events: none;
+  backdrop-filter: blur(4px);
 }
 
 /* ===========================================================================
